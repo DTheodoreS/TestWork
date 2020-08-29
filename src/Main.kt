@@ -1,15 +1,9 @@
-import java.io.File
-
+@ExperimentalUnsignedTypes
 fun main() {
-
-    val path = "src/resources/hosts.txt"
-    val file = File(path)
-
-    file.bufferedReader().forEachLine { it ->
-        println("{$it}")
-    }
+    var path = "src/resources/hosts.txt"
+    path = "F:\\ip_addresses"
+    //path = "F:\\ips.txt"
+    path = "src/resources/BufferReaderTest.txt"
+    val ipAddressReader = IPAddressReader()
+    ipAddressReader.read(path)
 }
-
-
-
-
