@@ -5,7 +5,7 @@ import java.util.*
 @Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_UNSIGNED_LITERALS")
 class FileReader(filePath: String) {
 
-    private var buffer = ByteArray(10) // BUFFER_SIZE = 8 * 1024
+    private var buffer = ByteArray(1024 * 8)
     private var bufferSize: Int = 0
 
     private var startTime: Date = Date()
@@ -35,7 +35,7 @@ class FileReader(filePath: String) {
             stream = FileInputStream(file)
 
             bufferSize = stream.read(buffer)
-            while (bufferSize != -1 /*&& percentsRead < 1*/) {
+            while (bufferSize != -1) {
                 bufferReadCallback(buffer, bufferSize)
                 calculateProgress()
                 bufferSize = stream.read(buffer)

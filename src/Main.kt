@@ -1,9 +1,13 @@
+@ExperimentalStdlibApi
 @ExperimentalUnsignedTypes
 fun main() {
-    var path = "src/resources/hosts.txt"
-    path = "F:\\ip_addresses"
-    //path = "F:\\ips.txt"
-    path = "src/resources/BufferReaderTest.txt"
-    val ipAddressReader = IPAddressReader()
-    ipAddressReader.read(path)
+    try {
+        val path = "src/resources/hosts.txt"
+        val counter = CounterIPAddresses(path)
+        counter.parse()
+    } catch (e: OutOfMemoryError) {
+        println("Not enough memory: ${e.localizedMessage}")
+        println("Please increase the maximum size of allocated memory. Recommended: -Xmx800M")
+        e.printStackTrace()
+    }
 }

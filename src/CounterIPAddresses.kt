@@ -1,19 +1,32 @@
 @ExperimentalUnsignedTypes
-class IPAddressReader {
+class CounterIPAddresses(filePath: String) {
 
     private val bufferReader = BufferReader()
 
     private var fileReader = FileReader("")
 
-    fun read(filePath: String) {
+    private var ipStore: IPStore? = null
 
-        val a = ULongArray(256*256*256*4)
+    private var filePath: String = ""
+
+    init {
+        this.filePath  = filePath
+    }
+
+    @ExperimentalStdlibApi
+    fun parse() {
+
+        ipStore = IPStore()
 
         fileReader = FileReader(filePath)
         fileReader.showStartMessage()
         fileReader.read(::bufferReadCallback, ::percentsChangedCallback)
         fileReader.showEndMessage()
 
+        println()
+        println("Calculate unique ip-addresses ...")
+        val count = ipStore?.calculateCount()
+        println("Found $count unique ip-addresses")
     }
 
     private fun percentsChangedCallback() {
@@ -29,6 +42,6 @@ class IPAddressReader {
     }
 
     private fun ipReadCallback(address: UByteArray) {
-        println(ipByteArrayToString(address))
+        ipStore?.addIPAddress(address)
     }
 }

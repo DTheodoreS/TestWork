@@ -94,6 +94,7 @@ fun bufferReadFromFileTest() {
 
 private fun readStringUseBufferReader(content: String, ipList: Array<String>): Boolean {
     val bufferReader = BufferReader()
+    bufferReader.returnResolvedIPAddressAsArray = true
 
     val buffer = content.toByteArray()
     val bufferSize = buffer.size
@@ -123,8 +124,9 @@ private fun readStringUseBufferReader(content: String, ipList: Array<String>): B
 
 @Suppress("SameParameterValue")
 private fun readFileUseBufferReader(filePath: String, ipList: Array<String>): Boolean {
-    val buffer = ByteArray(100) // BUFFER_SIZE = 8 * 1024
+    val buffer = ByteArray(100)
     val bufferReader = BufferReader()
+    bufferReader.returnResolvedIPAddressAsArray = true
     var addresses: Array<UByteArray> = emptyArray()
 
     val file = File(filePath)
@@ -169,4 +171,4 @@ private fun readFileUseBufferReader(filePath: String, ipList: Array<String>): Bo
     return true
 }
 
-fun noop(address: UByteArray) { }
+private fun noop(address: UByteArray) { }

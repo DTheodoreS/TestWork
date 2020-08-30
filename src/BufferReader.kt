@@ -20,6 +20,8 @@ class BufferReader {
 
     private var parseIPCallback: (UByteArray) -> Unit = { }
 
+    var returnResolvedIPAddressAsArray: Boolean = false
+
     fun readBuffer(buffer: ByteArray, bufferSize: Int, callback: (address: UByteArray) -> Unit) : Array<UByteArray> {
 
         parseIPCallback = callback
@@ -107,8 +109,10 @@ class BufferReader {
         }
 
         val ip = cloneUByteArray(ipAccumulator)
-        addresses += ip
         parseIPCallback(ip)
+        if (returnResolvedIPAddressAsArray)
+            addresses += ip
+
         resetIp()
     }
 
