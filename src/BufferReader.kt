@@ -96,9 +96,6 @@ class BufferReader {
         ipAccumulatorIndex++
 
         resetByteAccumulator()
-
-        if (ipAccumulatorIndex > 4)
-            error()
     }
 
     private fun saveIp() {

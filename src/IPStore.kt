@@ -29,12 +29,11 @@ class IPStore {
     private fun getIPBlockPosition(address: UByteArray): Int {
 
         val numBlock1Level = address[0].toInt()
-        val numBlock2Level = address[2].toInt()
-        val numBlock3Level = address[3].toInt()
+        val numBlock2Level = address[1].toInt()
+        val numBlock3Level = address[2].toInt()
 
-        val pos: Int = blockSize1Level * numBlock1Level
-                + blockSize2Level * numBlock2Level
-                + blockSize3Level * numBlock3Level
+        val pos: Int = blockSize1Level * numBlock1Level + blockSize2Level * numBlock2Level + blockSize3Level * numBlock3Level
+
         return pos
     }
 }
