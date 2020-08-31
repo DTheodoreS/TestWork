@@ -64,8 +64,11 @@ class FileReader(filePath: String) {
 
     fun showEndMessage() {
         val totalMS = endTime.time - startTime.time
-        val s = totalMS / 1000
-        val diff = "${s / 60}h ${s / 60}m ${s % 60}s"
+        val totalS = totalMS / 1000
+        val h = totalS / 3600
+        val m = (totalS - h*3600) / 60
+        val s = totalS % 60
+        val diff = "${h}h ${m}m ${s}s"
         println("... file reading completed [${formatTime(endTime)}] elapsed=$diff")
     }
 
