@@ -76,7 +76,7 @@ class FileReader(filePath: String) {
         bytesRead += bufferSize.toUInt()
 
         val newPercents = bytesRead.toDouble() / fileSize * 100
-        if (newPercents - percentsRead > 0.01) {
+        if (newPercents - percentsRead > 5) {
             percentsRead = newPercents
             percentsChanged()
         }

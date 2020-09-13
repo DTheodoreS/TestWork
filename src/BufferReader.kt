@@ -1,7 +1,5 @@
 @ExperimentalUnsignedTypes
 class BufferReader {
-    private var validIpSymbol = byteArrayOf( 10, 13, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57 )
-
     private var buffer: ByteArray = ByteArray(0)
     private var bufferSize: Int = 0
 
@@ -50,13 +48,8 @@ class BufferReader {
     }
 
     private fun analysis(byte: Byte) {
-        if (byte !in validIpSymbol) {
-            error()
-            return
-        }
-
-        if (byte == retCur || byte == newLine) {
-            saveIp()
+        if (byte in 48..57) {
+            digitCommit(byte)
             return
         }
 
@@ -65,6 +58,16 @@ class BufferReader {
             return
         }
 
+
+        if (byte == retCur || byte == newLine) {
+            saveIp()
+            return
+        }
+
+        error()
+    }
+
+    private fun digitCommit(byte: Byte) {
         if (byteAccumulatorIndex == 3) {
             error()
             return
@@ -105,26 +108,26 @@ class BufferReader {
             return
         }
 
-        val ip = cloneUByteArray(ipAccumulator)
-        parseIPCallback(ip)
+        parseIPCallback(ipAccumulator)
         if (returnResolvedIPAddressAsArray)
-            addresses += ip
+            addresses += cloneUByteArray(ipAccumulator)
 
         resetIp()
     }
 
     private fun resetIp() {
         resetByteAccumulator()
+
+        ipAccumulatorIndex = 0
         for (i in 0..3) {
             ipAccumulator[i] = 0u
-            ipAccumulatorIndex = 0
         }
     }
 
     private fun resetByteAccumulator() {
+        byteAccumulatorIndex = 0
         for (i in 0..2) {
             byteAccumulator[i] = 0u
-            byteAccumulatorIndex = 0
         }
     }
 
